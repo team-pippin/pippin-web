@@ -5,7 +5,7 @@ import { StripeProvider } from "react-stripe-elements";
 
 const App = () => {
   return (
-    <StripeProvider apiKey="pk_test_DEkI1EWGgkFTw6ZT18iH5YFz002g9t06lO">
+    <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
       <Router />
     </StripeProvider>
   );

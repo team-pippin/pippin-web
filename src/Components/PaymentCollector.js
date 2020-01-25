@@ -24,7 +24,8 @@ class PaymentCollector extends React.Component {
 
   postUser = (user, stripeToken) => {
     const url =
-      "http://localhost:5000/api/accounts/" +
+      process.env.REACT_APP_API_BASE_URL +
+      "api/accounts/" +
       user.accountId +
       "/payment-methods";
     return axios.post(

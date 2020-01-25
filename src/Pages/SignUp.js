@@ -19,7 +19,7 @@ class SignUp extends React.Component {
     event.preventDefault();
     console.log(this.state);
     try {
-      const url = "http://localhost:5000/api/accounts/sign-up";
+      const url = process.env.REACT_APP_API_BASE_URL + "api/accounts/sign-up";
       const response = await axios.post(url, {
         name: this.state.name,
         email: this.state.email,
