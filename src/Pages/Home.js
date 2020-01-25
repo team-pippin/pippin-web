@@ -1,11 +1,17 @@
 import React from "react";
-import { Heading } from "rebass";
+import { Heading, Box } from "rebass";
 
 const Home = () => {
   return (
-    <div>
+    <Box
+      sx={{
+        maxWidth: 800,
+        mx: "auto",
+        px: 3
+      }}
+    >
       <Heading as="h1">Home</Heading>
-    </div>
+    </Box>
   );
 };
 

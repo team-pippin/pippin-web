@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import Router from "./Components/Router";
 import { StripeProvider } from "react-stripe-elements";
 import { ThemeProvider } from "emotion-theming";
