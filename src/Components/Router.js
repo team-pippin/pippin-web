@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { Link as StyledLink, Flex, Text, Box } from "rebass";
 import Home from "../Pages/Home";
 import SignUp from "../Pages/SignUp";
 import Payment from "../Pages/Payment";
@@ -8,14 +9,20 @@ const Router = () => {
   return (
     <BrowserRouter>
       <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/sign-up">Sign Up</Link>
-          </li>
-        </ul>
+        <Flex px={2} alignItems="center">
+          <Text fontSize={[3, 4, 5]} p={3} fontWeight="bold">
+            Pippin
+          </Text>
+          <Box mx="auto" />
+
+          <Link to="/">
+            <StyledLink variant="nav">Home</StyledLink>
+          </Link>
+
+          <Link to="/sign-up">
+            <StyledLink variant="nav">Sign Up</StyledLink>
+          </Link>
+        </Flex>
 
         <hr />
 

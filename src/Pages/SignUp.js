@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { Box, Button } from "rebass";
+import { Label, Input } from "@rebass/forms";
 import { withRouter } from "react-router-dom";
 
 class SignUp extends React.Component {
@@ -41,37 +43,33 @@ class SignUp extends React.Component {
   render() {
     return (
       <div>
-        <p>Sign Up</p>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="text"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="text"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <Box as="form" onSubmit={this.handleSubmit} py={3}>
+          <Label htmlFor="name">Name</Label>
+          <Input
+            id="name"
+            name="name"
+            type="name"
+            value={this.state.name}
+            onChange={this.handleChange}
+          />
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <Button>Beep</Button>
+        </Box>
       </div>
     );
   }

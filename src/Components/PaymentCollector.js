@@ -1,6 +1,7 @@
 import React from "react";
 import { injectStripe } from "react-stripe-elements";
 import CardSection from "./CardSection";
+import { Button } from "rebass";
 import axios from "axios";
 
 class PaymentCollector extends React.Component {
@@ -43,7 +44,7 @@ class PaymentCollector extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <CardSection />
-        <button>Subscribe</button>
+        <Button>Subscribe</Button>
       </form>
     );
   }

@@ -1,9 +1,10 @@
 import React from "react";
+import { Heading } from "rebass";
 
 const Home = () => {
   return (
     <div>
-      <p>Home</p>
+      <Heading as="h1">Home</Heading>
     </div>
   );
 };
