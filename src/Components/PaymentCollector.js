@@ -25,7 +25,7 @@ const PaymentCollector = ({ userData, stripe, history }) => {
       history.push({
         pathname: "/create-school",
         data: {
-          token: this.props.userData.token
+          token: userData.token
         }
       });
     } catch (error) {
