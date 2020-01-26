@@ -1,34 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { injectStripe } from "react-stripe-elements";
-import CardSection from "./CardSection";
-import { Button } from "rebass";
+import CreditCardForm from "./CreditCardForm";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
+import LoadingButton from "./LoadingButton";
+import { Text } from "rebass";
 
-class PaymentCollector extends React.Component {
-  constructor(props) {
-    super(props);
+const PaymentCollector = ({ userData, stripe, history }) => {
+  const [loading, setLoading] = useState({ isLoading: false });
+  const [error, setError] = useState({ message: "" });
 
-    this.postUser = this.postUser.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit = async event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    console.log("submit");
+
     try {
-      const stripeToken = await this.props.stripe.createToken({ type: "card" });
-      await this.postUser(this.props.userData, stripeToken.token.id);
+      setLoading({ isLoading: true });
+      setError({ message: "" });
+
+      const stripeToken = await stripe.createToken({ type: "card" });
+      await postUser(userData, stripeToken.token.id);
+
+      setLoading({ isLoading: false });
+
+      history.push({
+        pathname: "/create-school",
+        data: {
+          token: this.props.userData.token
+        }
+      });
     } catch (error) {
       console.log(error);
+      setLoading({ isLoading: false });
+      setError({ message: error.message });
     }
   };
 
-  postUser = (user, stripeToken) => {
+  const postUser = (user, stripeToken) => {
     const url =
       process.env.REACT_APP_API_BASE_URL +
       "api/accounts/" +
       user.accountId +
       "/payment-methods";
+
     return axios.post(
       url,
       {
@@ -40,14 +53,14 @@ class PaymentCollector extends React.Component {
     );
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <CardSection />
-        <Button>Subscribe</Button>
-      </form>
-    );
-  }
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <CreditCardForm />
+      {error.message ? <Text>{error.message}</Text> : null}
 
-export default injectStripe(PaymentCollector);
+      <LoadingButton title="Subscribe" loading={loading.isLoading} my={3} />
+    </form>
+  );
+};
+
+export default injectStripe(withRouter(PaymentCollector));

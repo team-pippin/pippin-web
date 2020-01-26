@@ -71,11 +71,19 @@ export const preset = {
       fontWeight: "bold",
       display: "inline-block",
       p: 2,
-      color: "inherit",
+      color: "#333",
       textDecoration: "none",
       ":hover,:focus,.active": {
         color: "primary"
       }
+    },
+    navLogo: {
+      fontSize: 5,
+      fontWeight: "bold",
+      display: "inline-block",
+      color: "#333",
+      textDecoration: "none",
+      m: 3
     }
   },
   buttons: {
@@ -84,7 +92,12 @@ export const preset = {
       fontWeight: "bold",
       color: "background",
       bg: "primary",
-      borderRadius: "default"
+      borderRadius: 8,
+      py: 3,
+      px: 4,
+      "&:hover": {
+        bg: "text"
+      }
     },
     outline: {
       variant: "buttons.primary",
@@ -95,7 +108,10 @@ export const preset = {
     secondary: {
       variant: "buttons.primary",
       color: "background",
-      bg: "secondary"
+      bg: "secondary",
+      "&:hover": {
+        bg: "primary"
+      }
     }
   },
   styles: {

@@ -1,34 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Box, Button } from "rebass";
-import { Label, Input } from "@rebass/forms";
 import { withRouter } from "react-router-dom";
+import SignUpForm from "../Components/SignUpForm";
 
-class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { name: "", email: "", password: "" };
+const SignUp = ({ history }) => {
+  const [loading, setLoading] = useState({ isLoading: false });
+  const [error, setError] = useState({ message: "" });
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault();
-    console.log(this.state);
+  const onSubmit = async data => {
     try {
+      setLoading({ isLoading: true });
+      setError({ message: "" });
+
       const url = process.env.REACT_APP_API_BASE_URL + "api/accounts/sign-up";
       const response = await axios.post(url, {
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password
+        name: data.name,
+        email: data.email,
+        password: data.password
       });
-      console.log(response);
-      this.props.history.push({
+
+      setLoading({ isLoading: false });
+
+      history.push({
         pathname: "/payment",
         data: {
           accountId: response.data.account._id,
@@ -36,43 +29,19 @@ class SignUp extends React.Component {
         }
       });
     } catch (error) {
+      setLoading({ isLoading: false });
+      setError({ message: error.message });
       console.log(error);
     }
-  }
+  };
 
-  render() {
-    return (
-      <div>
-        <Box as="form" onSubmit={this.handleSubmit} py={3}>
-          <Label htmlFor="name">Name</Label>
-          <Input
-            id="name"
-            name="name"
-            type="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          <Button>Beep</Button>
-        </Box>
-      </div>
-    );
-  }
-}
+  return (
+    <SignUpForm
+      errorMessage={error.message}
+      loading={loading.isLoading}
+      onSubmit={onSubmit}
+    />
+  );
+};
 
 export default withRouter(SignUp);
