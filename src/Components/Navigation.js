@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Link as StyledLink, Flex, Box } from "rebass";
 
-const NavBar = () => {
+const NavBar = ({ authenticated }) => {
   return (
     <Flex px={2} alignItems="center">
       <Link to="/">
@@ -10,9 +10,21 @@ const NavBar = () => {
       </Link>
       <Box mx="auto" />
 
-      <Link to="/sign-up">
-        <StyledLink variant="nav">Sign Up</StyledLink>
-      </Link>
+      {authenticated ? (
+        <Link to="/account">
+          <StyledLink variant="nav">Account</StyledLink>
+        </Link>
+      ) : (
+        <>
+          <Link to="/sign-in">
+            <StyledLink variant="nav">Sign In</StyledLink>
+          </Link>
+
+          <Link to="/sign-up">
+            <StyledLink variant="nav">Sign Up</StyledLink>
+          </Link>
+        </>
+      )}
     </Flex>
   );
 };

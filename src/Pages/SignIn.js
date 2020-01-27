@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
-import SignUpForm from "../Components/SignUpForm";
-import { Box, Heading } from "rebass";
-import { Context as AuthContext } from "../Context/auth/AuthContext";
+import { Heading, Box } from "rebass";
+import SignInForm from "../Components/SignInForm";
 import { useHistory } from "react-router-dom";
+import { Context as AuthContext } from "../Context/auth/AuthContext";
 
-const SignUp = () => {
-  const { signUp } = useContext(AuthContext);
+const SignIn = () => {
+  const { signIn } = useContext(AuthContext);
 
   const [loading, setLoading] = useState({ isLoading: false });
   const [error, setError] = useState({ message: "" });
@@ -13,11 +13,11 @@ const SignUp = () => {
   const history = useHistory();
 
   const onSubmit = async data => {
+    setLoading({ isLoading: true });
+    setError({ message: "" });
     try {
-      setLoading({ isLoading: true });
-      setError({ message: "" });
+      await signIn(data.email, data.password, history);
 
-      await signUp(data.name, data.email, data.password, history);
       setLoading({ isLoading: false });
     } catch (error) {
       console.log(error);
@@ -35,9 +35,9 @@ const SignUp = () => {
       }}
     >
       <Heading mb={2} as="h1">
-        Sign Up
+        Sign In
       </Heading>
-      <SignUpForm
+      <SignInForm
         errorMessage={error.message}
         loading={loading.isLoading}
         onSubmit={onSubmit}
@@ -46,4 +46,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

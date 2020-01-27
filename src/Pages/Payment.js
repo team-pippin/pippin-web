@@ -10,7 +10,7 @@ const Payment = ({ location }) => {
   return (
     <Box
       sx={{
-        maxWidth: 600,
+        maxWidth: 800,
         mx: "auto",
         px: 3
       }}

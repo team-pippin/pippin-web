@@ -1,20 +1,22 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
 import Home from "../Pages/Home";
 import SignUp from "../Pages/SignUp";
 import Payment from "../Pages/Payment";
 import NavBar from "./Navigation";
 import SchoolCreate from "../Pages/SchoolCreate";
+import SignIn from "../Pages/SignIn";
+import Account from "../Pages/Account";
+import { Context as AuthContext } from "../Context/auth/AuthContext";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 const Router = () => {
+  const { state } = useContext(AuthContext);
+
   return (
     <BrowserRouter>
       <div>
-        <NavBar />
+        <NavBar authenticated={state.token !== null} />
 
-        {
-          // Switch
-        }
         <Switch>
           <Route exact path="/">
             <Home />
@@ -22,15 +24,44 @@ const Router = () => {
           <Route path="/sign-up">
             <SignUp />
           </Route>
-          <Route path="/payment">
+          <Route path="/sign-in">
+            <SignIn />
+          </Route>
+
+          <PrivateRoute path="/payment">
             <Payment />
-          </Route>
-          <Route path="/create-school">
+          </PrivateRoute>
+          <PrivateRoute path="/create-school">
             <SchoolCreate />
-          </Route>
+          </PrivateRoute>
+          <PrivateRoute path="/account">
+            <Account />
+          </PrivateRoute>
         </Switch>
       </div>
     </BrowserRouter>
+  );
+};
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const { state } = useContext(AuthContext);
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        state.token !== null ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/sign-in",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
   );
 };
 

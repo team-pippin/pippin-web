@@ -3,9 +3,8 @@ import LoadingButton from "./LoadingButton";
 import { Box, Text } from "rebass";
 import { Label, Input } from "@rebass/forms";
 
-const SignUpForm = ({ loading, onSubmit, errorMessage }) => {
+const SignInForm = ({ loading, onSubmit, errorMessage }) => {
   const [values, setValues] = useState({
-    name: "",
     email: "",
     password: ""
   });
@@ -22,22 +21,11 @@ const SignUpForm = ({ loading, onSubmit, errorMessage }) => {
         event.preventDefault();
 
         onSubmit({
-          name: values.name,
           email: values.email,
           password: values.password
         });
       }}
     >
-      <Label htmlFor="name" py={2}>
-        Name
-      </Label>
-      <Input
-        id="name"
-        name="name"
-        type="name"
-        value={values.name}
-        onChange={handleInputChange}
-      />
       <Label htmlFor="email" py={2}>
         Email
       </Label>
@@ -62,9 +50,9 @@ const SignUpForm = ({ loading, onSubmit, errorMessage }) => {
 
       {errorMessage ? <Text>{errorMessage}</Text> : null}
 
-      <LoadingButton title="Sign Up" loading={loading} />
+      <LoadingButton title="Sign In" loading={loading} />
     </Box>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;
