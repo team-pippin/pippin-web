@@ -1,7 +1,7 @@
 import React from "react";
 import { Elements } from "react-stripe-elements";
 import { withRouter } from "react-router-dom";
-import PaymentCollector from "../Components/PaymentCollector";
+import PaymentCollector from "../components/PaymentCollector";
 import { Box } from "rebass";
 
 const Payment = ({ location }) => {

@@ -1,14 +1,17 @@
-import React, { useEffect, useContext } from "react";
-import { Heading, Box } from "rebass";
-import axios from "axios";
-import { Context as AuthContext } from "../Context/auth/AuthContext";
+import React, { useContext, useEffect } from "react";
+import { Heading, Box, Text } from "rebass";
+import { Context as AuthContext } from "../context/auth/AuthContext";
 
 const Account = () => {
-  const { state } = useContext(AuthContext);
+  const { state, fetchAccount } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(state.accountId);
-  }, [state]);
+    const fetch = async () => {
+      await fetchAccount();
+    };
+
+    fetch();
+  }, []);
 
   return (
     <Box
@@ -21,6 +24,7 @@ const Account = () => {
       <Heading mb={2} as="h1">
         Account
       </Heading>
+      <Text>{state.account.name}</Text>
     </Box>
   );
 };

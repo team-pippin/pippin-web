@@ -11,18 +11,24 @@ const NavBar = ({ authenticated }) => {
       <Box mx="auto" />
 
       {authenticated ? (
-        <Link to="/account">
-          <StyledLink variant="nav">Account</StyledLink>
-        </Link>
+        <>
+          <StyledLink href="/account" variant="nav">
+            Account
+          </StyledLink>
+
+          <StyledLink href="/log-out" variant="nav">
+            Log Out
+          </StyledLink>
+        </>
       ) : (
         <>
-          <Link to="/sign-in">
-            <StyledLink variant="nav">Sign In</StyledLink>
-          </Link>
+          <StyledLink href="/sign-in" variant="nav">
+            Sign In
+          </StyledLink>
 
-          <Link to="/sign-up">
-            <StyledLink variant="nav">Sign Up</StyledLink>
-          </Link>
+          <StyledLink href="/sign-up" variant="nav">
+            Sign Up
+          </StyledLink>
         </>
       )}
     </Flex>

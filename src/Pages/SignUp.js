@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import SignUpForm from "../Components/SignUpForm";
+import SignUpForm from "../components/SignUpForm";
 import { Box, Heading } from "rebass";
-import { Context as AuthContext } from "../Context/auth/AuthContext";
+import { Context as AuthContext } from "../context/auth/AuthContext";
 import { useHistory } from "react-router-dom";
 
 const SignUp = () => {

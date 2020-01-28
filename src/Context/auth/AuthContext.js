@@ -5,7 +5,8 @@ import {
   USER_SIGN_IN,
   CLEAR_ERRORS,
   SIGN_OUT,
-  USER_SIGN_UP
+  USER_SIGN_UP,
+  FETCH_ACCOUNT
 } from "./AuthTypes";
 
 const authReducer = (state, action) => {
@@ -16,14 +17,21 @@ const authReducer = (state, action) => {
     case USER_SIGN_UP:
       return {
         token: action.payload.token,
-        accountId: action.payload.accountId,
+        account: action.payload.account,
         errorMessage: ""
       };
 
     case USER_SIGN_IN:
       return {
         token: action.payload.token,
-        accountId: action.payload.accountId,
+        account: action.payload.account,
+        errorMessage: ""
+      };
+
+    case FETCH_ACCOUNT:
+      return {
+        ...state,
+        account: action.payload,
         errorMessage: ""
       };
 
@@ -31,7 +39,7 @@ const authReducer = (state, action) => {
       return { ...state, errorMessage: "" };
 
     case SIGN_OUT:
-      return { token: null, accountId: null, errorMessage: "" };
+      return { token: null, account: null, errorMessage: "" };
 
     default:
       return state;
@@ -44,6 +52,7 @@ const clearErrors = dispatch => () => {
 
 const signOut = dispatch => () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("account");
   dispatch({ type: SIGN_OUT });
 };
 
@@ -54,11 +63,15 @@ const signUp = dispatch => async (name, email, password, history) => {
       email,
       password
     });
+
     const token = response.data.token;
-    const accountId = response.data.account._id;
+    const account = response.data.account;
+
     localStorage.setItem("token", token);
-    dispatch({ type: USER_SIGN_UP, payload: { token, accountId } });
-    history.push("/payment");
+    localStorage.setItem("account", JSON.stringify(account));
+
+    dispatch({ type: USER_SIGN_UP, payload: { token, account } });
+    history.push({ pathname: "/payment", data: account });
   } catch (error) {
     console.log(error);
     dispatch({ type: SIGN_UP_ERROR, payload: "Sign up error" });
@@ -71,12 +84,30 @@ const signIn = dispatch => async (email, password, history) => {
       email,
       password
     });
+
     const token = response.data.token;
-    const accountId = response.data.account._id;
+    const account = response.data.account;
 
     localStorage.setItem("token", token);
-    dispatch({ type: USER_SIGN_IN, payload: { token, accountId } });
-    history.push("/account");
+    localStorage.setItem("account", JSON.stringify(account));
+
+    dispatch({ type: USER_SIGN_IN, payload: { token, account } });
+    history.push({ pathname: "/account", data: account });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: SIGN_UP_ERROR, payload: "Sign up error" });
+  }
+};
+
+const fetchAccount = dispatch => async () => {
+  try {
+    const id = JSON.parse(localStorage.getItem("account"))._id;
+    const response = await pippinApi.get(`api/accounts/${id}`);
+    const account = response.data.account;
+
+    localStorage.setItem("account", JSON.stringify(account));
+
+    dispatch({ type: FETCH_ACCOUNT, payload: account });
   } catch (error) {
     console.log(error);
     dispatch({ type: SIGN_UP_ERROR, payload: "Sign up error" });
@@ -85,10 +116,10 @@ const signIn = dispatch => async (email, password, history) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signUp, signIn, signOut, clearErrors },
+  { signUp, signIn, signOut, fetchAccount, clearErrors },
   {
-    token: null,
-    accountId: null,
+    token: localStorage.getItem("token"),
+    account: JSON.parse(localStorage.getItem("account")),
     errorMessage: ""
   }
 );

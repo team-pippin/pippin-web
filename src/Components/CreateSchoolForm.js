@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Heading, Box, Text, Flex } from "rebass";
 import { Label, Input } from "@rebass/forms";
-import LoadingButton from "../Components/LoadingButton";
+import LoadingButton from "./LoadingButton";
 
 const CreateSchoolForm = ({ loading, errorMessage, handleSubmit }) => {
   const [values, setValues] = useState({

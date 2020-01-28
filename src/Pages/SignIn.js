@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Heading, Box } from "rebass";
-import SignInForm from "../Components/SignInForm";
+import SignInForm from "../components/SignInForm";
 import { useHistory } from "react-router-dom";
-import { Context as AuthContext } from "../Context/auth/AuthContext";
+import { Context as AuthContext } from "../context/auth/AuthContext";
 
 const SignIn = () => {
   const { signIn } = useContext(AuthContext);
@@ -17,8 +17,6 @@ const SignIn = () => {
     setError({ message: "" });
     try {
       await signIn(data.email, data.password, history);
-
-      setLoading({ isLoading: false });
     } catch (error) {
       console.log(error);
       setLoading({ isLoading: false });

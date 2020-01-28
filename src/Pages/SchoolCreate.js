@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import CreateSchoolForm from "../Components/CreateSchoolForm";
+import CreateSchoolForm from "../components/CreateSchoolForm";
 
 const SchoolCreate = ({ location, history }) => {
   const [loading, setLoading] = useState({ isLoading: false });
