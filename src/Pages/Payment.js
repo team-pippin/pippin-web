@@ -8,13 +8,7 @@ const Payment = ({ location }) => {
   console.log(location.data);
 
   return (
-    <Box
-      sx={{
-        maxWidth: 800,
-        mx: "auto",
-        px: 3
-      }}
-    >
+    <Box>
       <Elements>
         <PaymentCollector userData={location.data} />
       </Elements>

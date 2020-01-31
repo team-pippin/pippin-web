@@ -25,13 +25,7 @@ const SignIn = () => {
   };
 
   return (
-    <Box
-      sx={{
-        maxWidth: 800,
-        mx: "auto",
-        px: 3
-      }}
-    >
+    <Box>
       <Heading mb={2} as="h1">
         Sign In
       </Heading>

@@ -1,6 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import { Heading, Box, Text } from "rebass";
+import { Heading, Box, Text, Flex } from "rebass";
+import { Tiles } from "@rebass/layout";
 import { Context as AuthContext } from "../context/auth/AuthContext";
+import AccountName from "../components/AccountName";
+import AccountSchoolList from "../components/AccountSchoolList";
 
 const Account = () => {
   const { state, fetchAccount } = useContext(AuthContext);
@@ -14,18 +17,23 @@ const Account = () => {
   }, []);
 
   return (
-    <Box
-      sx={{
-        maxWidth: 800,
-        mx: "auto",
-        px: 3
-      }}
-    >
-      <Heading mb={2} as="h1">
-        Account
-      </Heading>
-      <Text>{state.account.name}</Text>
-    </Box>
+    <Flex mt={100}>
+      <Box width={1 / 2}>
+        <AccountName name={state.account.name} role={"Admin"} />
+        <Box height={72} />
+        <AccountSchoolList
+          schools={[
+            { name: "Bozeman High School" },
+            { name: "Bozeman Middle School" }
+          ]}
+        />
+      </Box>
+      <Box width={1 / 2}>
+        <Flex>
+          <Text>Hello</Text>
+        </Flex>
+      </Box>
+    </Flex>
   );
 };
 

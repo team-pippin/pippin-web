@@ -92,7 +92,7 @@ const signIn = dispatch => async (email, password, history) => {
     localStorage.setItem("account", JSON.stringify(account));
 
     dispatch({ type: USER_SIGN_IN, payload: { token, account } });
-    history.push({ pathname: "/account", data: account });
+    history.push({ pathname: "/", data: account });
   } catch (error) {
     console.log(error);
     dispatch({ type: SIGN_UP_ERROR, payload: "Sign up error" });

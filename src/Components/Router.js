@@ -1,27 +1,21 @@
 import React, { useContext } from "react";
-import Home from "../pages/Home";
 import SignUp from "../pages/SignUp";
 import Payment from "../pages/Payment";
-import NavBar from "./Navigation";
+import { StripeProvider } from "react-stripe-elements";
 import SchoolCreate from "../pages/SchoolCreate";
 import SignIn from "../pages/SignIn";
 import Account from "../pages/Account";
 import { Context as AuthContext } from "../context/auth/AuthContext";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import LogOut from "./LogOut";
+import Layout from "../pages/layouts/Layout";
+import PublicLayout from "../pages/layouts/PublicLayout";
 
 const Router = () => {
-  const { state } = useContext(AuthContext);
-
   return (
     <BrowserRouter>
       <div>
-        <NavBar authenticated={state.token !== null} />
-
         <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
           <PublicRoute path="/sign-up">
             <SignUp />
           </PublicRoute>
@@ -29,14 +23,17 @@ const Router = () => {
             <SignIn />
           </PublicRoute>
 
+          <PrivateRoute exact path="/">
+            <Account />
+          </PrivateRoute>
+
           <PrivateRoute path="/payment">
-            <Payment />
+            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
+              <Payment />
+            </StripeProvider>
           </PrivateRoute>
           <PrivateRoute path="/create-school">
             <SchoolCreate />
-          </PrivateRoute>
-          <PrivateRoute path="/account">
-            <Account />
           </PrivateRoute>
           <PrivateRoute path="/log-out">
             <LogOut />
@@ -55,11 +52,11 @@ const PublicRoute = ({ children, ...rest }) => {
       {...rest}
       render={({ location }) =>
         state.token === null ? (
-          children
+          <PublicLayout children={children} />
         ) : (
           <Redirect
             to={{
-              pathname: "/account",
+              pathname: "/",
               state: { from: location }
             }}
           />
@@ -77,7 +74,7 @@ const PrivateRoute = ({ children, ...rest }) => {
       {...rest}
       render={({ location }) =>
         state.token !== null ? (
-          children
+          <Layout children={children} />
         ) : (
           <Redirect
             to={{

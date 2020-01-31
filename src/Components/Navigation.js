@@ -5,23 +5,15 @@ import { Link as StyledLink, Flex, Box } from "rebass";
 const NavBar = ({ authenticated }) => {
   return (
     <Flex px={2} alignItems="center">
-      <Link to="/">
-        <StyledLink variant="navLogo">Pippin</StyledLink>
-      </Link>
-      <Box mx="auto" />
-
       {authenticated ? (
         <>
-          <StyledLink href="/account" variant="nav">
-            Account
-          </StyledLink>
-
-          <StyledLink href="/log-out" variant="nav">
-            Log Out
-          </StyledLink>
+          <Box mx="auto" />
+          <StyledLink variant="navLogo">Pippin</StyledLink>
         </>
       ) : (
         <>
+          <StyledLink variant="navLogo">Pippin</StyledLink>
+          <Box mx="auto" />
           <StyledLink href="/sign-in" variant="nav">
             Sign In
           </StyledLink>

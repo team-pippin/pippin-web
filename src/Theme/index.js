@@ -78,7 +78,7 @@ export const preset = {
       }
     },
     navLogo: {
-      fontSize: 5,
+      fontSize: 4,
       fontWeight: "bold",
       display: "inline-block",
       color: "#333",
