@@ -15,6 +15,7 @@ const ArticleList = ({ articles }) => {
           <th>Title</th>
           <th>Subtitle</th>
           <th>Body</th>
+          <th>Author</th>
         </tr>
       </thead>
       <tbody>{listItems}</tbody>
@@ -23,14 +24,3 @@ const ArticleList = ({ articles }) => {
 };
 
 export default ArticleList;
-
-// const listItems = numbers.map((number) =>
-//     // Correct! Key should be specified inside the array.
-//     <ListItem key={number.toString()}
-//               value={number} />
-
-//   );
-//   return (
-//     <ul>
-//       {listItems}
-//     </ul>

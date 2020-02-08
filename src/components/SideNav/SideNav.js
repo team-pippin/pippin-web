@@ -45,7 +45,7 @@ const SideNav = ({ isExpanded, onToggleExpanded }) => {
             />
           </Link>
 
-          <Link to="/logout">
+          <Link to="/log-out">
             <SideNavItem title="Logout" expanded={isExpanded} />
           </Link>
         </Flex>

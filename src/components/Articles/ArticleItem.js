@@ -8,6 +8,7 @@ const ArticleItem = ({ article }) => {
       <td>{article.title}</td>
       <td>{article.subtitle}</td>
       <td>{article.body}</td>
+      <td>{article.author.name}</td>
     </tr>
   );
 };
