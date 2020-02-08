@@ -25,14 +25,15 @@ export const preset = {
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   sizes: {
-    avatar: 48
+    avatar: 48,
+    avatarMed: 36
   },
   radii: {
     default: 4,
     circle: 99999
   },
   shadows: {
-    card: "0 0 4px rgba(0, 0, 0, .125)"
+    card: "0 0 16px rgba(0, 0, 0, .125)"
   },
   // rebass variants
   text: {
@@ -56,6 +57,11 @@ export const preset = {
     avatar: {
       width: "avatar",
       height: "avatar",
+      borderRadius: "circle"
+    },
+    avatarMed: {
+      width: "avatarMed",
+      height: "avatarMed",
       borderRadius: "circle"
     },
     card: {
@@ -84,6 +90,21 @@ export const preset = {
       color: "#333",
       textDecoration: "none",
       m: 3
+    },
+    schoolCardLink: {
+      textDecoration: "none",
+      color: "text",
+      ":hover,:focus,.active": {
+        color: "primary"
+      }
+    },
+    sideNavItem: {
+      color: "white",
+      background: "primary",
+      borderRadius: 4,
+      "&:hover": {
+        background: "secondary"
+      }
     }
   },
   buttons: {

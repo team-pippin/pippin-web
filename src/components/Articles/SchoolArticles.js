@@ -1,14 +1,28 @@
-import React, { useContext, useEffect } from "react";
-import { Heading, Box, Text } from "rebass";
-import ArticleList from "./Articles/ArticleList";
-import { Context as ArticleContext } from "../context/article/ArticleContext";
+import React, { useContext, useEffect, useState } from "react";
+import { Heading, Box } from "rebass";
+import ArticleList from "./ArticleList";
+import { Context as ArticleContext } from "../../context/article/ArticleContext";
+import Button from "react-bootstrap/Button";
+import AddSchoolModal from "./AddSchoolModal";
 
-const SchoolArticles = () => {
-  const { state, getArticles } = useContext(ArticleContext);
+const SchoolArticles = ({ schoolId }) => {
+  const { state, getArticles, postArticle } = useContext(ArticleContext);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleSubmit = data => {
+    console.log(data);
+
+    postArticle(schoolId, data);
+    handleClose();
+  };
 
   useEffect(() => {
     const fetch = async () => {
-      await getArticles();
+      await getArticles(schoolId);
     };
 
     fetch();
@@ -19,7 +33,18 @@ const SchoolArticles = () => {
       <Heading mb={2} as="h1">
         Articles
       </Heading>
-      <ArticleList articles={state.articles} />
+
+      <Button variant="primary" onClick={handleShow}>
+        Add News
+      </Button>
+      <Box mt={3}>
+        <ArticleList articles={state.articles} />
+      </Box>
+      <AddSchoolModal
+        showModal={showModal}
+        handleClose={handleClose}
+        submit={handleSubmit}
+      />
     </Box>
   );
 };

@@ -33,10 +33,30 @@ const clearErrors = dispatch => () => {
   dispatch({ type: CLEAR_ERRORS });
 };
 
-// TODO: - Pass in school id??
+const getArticles = dispatch => async schoolId => {
+  try {
+    const response = await pippinApi.get(`api/schools/${schoolId}/articles`);
+    const articles = response.data;
 
-const getArticles = dispatch => () => {};
-const postArticle = dispatch => () => {};
+    dispatch({ type: GET_ARTICLES, payload: articles });
+  } catch (error) {
+    dispatch({ type: ARTICLE_ERROR, payload: "Failed to get Articles" });
+  }
+};
+
+const postArticle = dispatch => async (schoolId, data) => {
+  try {
+    const response = await pippinApi.post(
+      `api/schools/${schoolId}/articles`,
+      data
+    );
+    const articles = response.data;
+
+    dispatch({ type: GET_ARTICLES, payload: articles });
+  } catch (error) {
+    dispatch({ type: ARTICLE_ERROR, payload: "Failed to get Articles" });
+  }
+};
 
 export const { Provider, Context } = createDataContext(
   authReducer,

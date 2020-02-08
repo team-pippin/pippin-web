@@ -1,19 +1,33 @@
 import React from "react";
-import { Box, Text, Heading, Card, Image, Flex } from "rebass";
+import { Link } from "react-router-dom";
+import { Box, Text } from "rebass";
 import AccountSchoolListItem from "./AccountSchoolListItem";
 
 const AccountSchoolList = ({ schools }) => {
   const listItems = schools.map(school => (
-    <AccountSchoolListItem name={school.name} />
+    <Link
+      to={`/schools/${school._id}`}
+      style={{ textDecoration: "none", color: "black" }}
+    >
+      <AccountSchoolListItem
+        key={school._id}
+        name={school.name}
+        city={school.city}
+        state={school.state}
+        zip={school.postalCode}
+      />
+    </Link>
   ));
 
   return (
-    <Box mt={24}>
-      <Text fontSize={1} fontWeight="bold" color="grey">
-        MANAGE SCHOOLS
-      </Text>
-      {listItems}
-    </Box>
+    <>
+      <Box>
+        <Text fontSize={1} fontWeight="bold" color="grey">
+          MANAGE SCHOOLS
+        </Text>
+        {listItems}
+      </Box>
+    </>
   );
 };
 

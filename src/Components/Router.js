@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
-import SignUp from "../pages/SignUp";
-import Payment from "../pages/Payment";
 import { StripeProvider } from "react-stripe-elements";
-import SchoolCreate from "../pages/SchoolCreate";
-import SignIn from "../pages/SignIn";
-import Account from "../pages/Account";
-import { Context as AuthContext } from "../context/auth/AuthContext";
+import { Provider as AccountProvider } from "../context/account/AccountContext";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { Context as AuthContext } from "../context/auth/AuthContext";
 import LogOut from "./LogOut";
 import Layout from "../pages/layouts/Layout";
 import PublicLayout from "../pages/layouts/PublicLayout";
+import ManageSchoolLayout from "../pages/layouts/ManageSchoolLayout";
+import SchoolHome from "../pages/SchoolHome";
+import Articles from "../pages/Articles";
+import SchoolCreate from "../pages/SchoolCreate";
+import SignIn from "../pages/SignIn";
+import Account from "../pages/Account";
+import SignUp from "../pages/SignUp";
+import Payment from "../pages/Payment";
+import News from "../pages/Calendar";
 
 const Router = () => {
   return (
@@ -38,6 +43,16 @@ const Router = () => {
           <PrivateRoute path="/log-out">
             <LogOut />
           </PrivateRoute>
+
+          <ManagedSchoolRoute path={"/schools/:schoolId/articles"}>
+            <Articles />
+          </ManagedSchoolRoute>
+          <ManagedSchoolRoute path={"/schools/:schoolId/calendar"}>
+            <News />
+          </ManagedSchoolRoute>
+          <ManagedSchoolRoute path={"/schools/:schoolId"}>
+            <SchoolHome />
+          </ManagedSchoolRoute>
         </Switch>
       </div>
     </BrowserRouter>
@@ -74,7 +89,33 @@ const PrivateRoute = ({ children, ...rest }) => {
       {...rest}
       render={({ location }) =>
         state.token !== null ? (
-          <Layout children={children} />
+          <AccountProvider>
+            <Layout children={children} />
+          </AccountProvider>
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/sign-in",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+
+const ManagedSchoolRoute = ({ children, ...rest }) => {
+  const { state } = useContext(AuthContext);
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        state.token !== null ? (
+          <AccountProvider>
+            <ManageSchoolLayout children={children} />
+          </AccountProvider>
         ) : (
           <Redirect
             to={{

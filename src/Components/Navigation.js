@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Link as StyledLink, Flex, Box } from "rebass";
 
 const NavBar = ({ authenticated }) => {

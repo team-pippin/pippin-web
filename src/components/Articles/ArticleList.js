@@ -1,6 +1,6 @@
 import React from "react";
-import { Heading, Box, Text, Flex } from "rebass";
 import ArticleItem from "./ArticleItem";
+import Table from "react-bootstrap/Table";
 
 const ArticleList = ({ articles }) => {
   const listItems = articles.map(article => (
@@ -8,10 +8,17 @@ const ArticleList = ({ articles }) => {
   ));
 
   return (
-    <>
-      <Heading>HELLO</Heading>
-      <ul>{listItems}</ul>
-    </>
+    <Table responsive>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Subtitle</th>
+          <th>Body</th>
+        </tr>
+      </thead>
+      <tbody>{listItems}</tbody>
+    </Table>
   );
 };
 

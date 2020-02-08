@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Text, Box, Flex } from "rebass";
+import { Heading, Box } from "rebass";
 import RoleTag from "./RoleTag";
 
 const AccountName = ({ name, role }) => {
@@ -9,8 +9,8 @@ const AccountName = ({ name, role }) => {
   };
 
   return (
-    <Box my={36}>
-      <Heading fontSize={5}>Welcome, {capitalize(name)}!</Heading>
+    <Box my={[16, 36]}>
+      <Heading fontSize={[4, 5]}>Welcome, {capitalize(name)}!</Heading>
       <RoleTag role={role} />
     </Box>
   );
